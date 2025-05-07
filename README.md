@@ -2,4 +2,4 @@ proyecto final auditoria ..........
 
 
 paso a paso para correr el proyecto
-cambio #1/1 Andrés Rincónnnn
+cambio #1/1 Andrés Rincónnnn 02
