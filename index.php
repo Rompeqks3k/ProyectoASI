@@ -33,29 +33,45 @@ if (!$user) {
     .container {
         text-align: center;
         background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 300px;
+        padding: 32px 32px 28px 32px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(106, 13, 173, 0.10);
+        width: 360px;
+        min-width: 320px;
+    }
+
+    .container h1 {
+        margin-bottom: 32px;
+        font-size: 1.5rem;
+        color: #6a0dad;
+    }
+
+    .container a {
+        text-decoration: none;
+        display: block;
+        margin-bottom: 18px;
     }
 
     button {
-        width: 100%;
-        padding: 10px;
-        background-color: #6a0dad; /* Color morado */
+        width: 90%;
+        max-width: 260px;
+        padding: 14px 0;
+        background-color: #6a0dad;
         color: white;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
-        margin-top: 10px;
+        font-size: 1.08rem;
+        font-weight: 600;
+        margin: 0 auto;
+        transition: background 0.2s, transform 0.1s;
+        box-shadow: 0 2px 8px rgba(106, 13, 173, 0.08);
+        display: block;
     }
 
     button:hover {
-        background-color: #4b0082; /* Morado más oscuro al pasar el cursor */
-    }
-
-    a {
-        text-decoration: none;
+        background-color: #4b0082;
+        transform: translateY(-2px) scale(1.03);
     }
 </style>
 
@@ -66,5 +82,8 @@ if (!$user) {
     </a>
     <a href="perfil.php">
         <button>Perfil</button>
+    </a>
+    <a href="registro_inventario.php">
+        <button>Registrar Inventario</button>
     </a>
 </div>
