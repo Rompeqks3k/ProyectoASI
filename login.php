@@ -2,6 +2,8 @@
 session_start();
 require 'db.php';
 
+$mensaje_error = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['email']; // Puede ser usuario o email
     $password = $_POST['password'];
@@ -17,58 +19,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: index.php");
         exit();
     } else {
-        echo "Credenciales incorrectas";
+        $mensaje_error = "Credenciales incorrectas";
     }
 }
 ?>
-<link rel="stylesheet" href="styles.css">
-
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-    }
-
-    form {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        width: 300px;
-    }
-
-    input {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #6a0dad; /* Color morado */
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #4b0082; /* Morado más oscuro al pasar el cursor */
-    }
-</style>
-
-<form method="POST">
-    <h2>Iniciar Sesión</h2>
-    <input type="text" name="email" placeholder="Usuario o Email" required>
-    <input type="password" name="password" placeholder="Contraseña" required>
-    <button type="submit">Iniciar sesión</button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl px-10 py-12 flex flex-col items-center" style="margin-top:40px; margin-bottom:40px;">
+            <h2 class="text-3xl font-bold text-purple-700 mb-8 text-center tracking-tight">Iniciar Sesión</h2>
+            <?php if (!empty($mensaje_error)): ?>
+                <div id="noti-error" class="mb-6 w-full bg-red-100 border border-red-300 text-red-700 px-6 py-3 rounded-lg shadow font-semibold text-center transition">
+                    <?php echo htmlspecialchars($mensaje_error); ?>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        var noti = document.getElementById('noti-error');
+                        if (noti) noti.style.display = 'none';
+                    }, 4000);
+                </script>
+            <?php endif; ?>
+            <form method="POST" autocomplete="off" class="w-full flex flex-col gap-6">
+                <div class="flex flex-col">
+                    <label for="email" class="text-purple-700 font-medium mb-1">Usuario o Email</label>
+                    <input type="text" name="email" id="email" placeholder="Usuario o Email" required class="rounded-xl border border-purple-200 px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-300 transition text-base">
+                </div>
+                <div class="flex flex-col">
+                    <label for="password" class="text-purple-700 font-medium mb-1">Contraseña</label>
+                    <input type="password" name="password" id="password" placeholder="Contraseña" required class="rounded-xl border border-purple-200 px-4 py-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-300 transition text-base">
+                </div>
+                <button type="submit" class="mt-4 bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg tracking-wide">
+                    Entrar
+                </button>
+            </form>
+            <div class="w-full flex justify-center mt-8">
+                <a href="register.php" class="text-purple-700 font-semibold hover:underline text-base transition">
+                    ¿No tienes cuenta? <span class="underline">Crear cuenta</span>
+                </a>
+            </div>
+            <!-- Aquí puedes agregar más contenido dinámico como tablas, gráficas, etc. -->
+        </div>
+    </div>
+</body>
+</html>

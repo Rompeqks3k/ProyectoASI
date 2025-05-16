@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="styles.css">
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
@@ -10,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 include 'db.php';
 
 // Obtener los datos del usuario desde la base de datos
-$stmt = $pdo->prepare("SELECT nombre, apellido FROM usuarios WHERE usuario = ? OR email = ?");
+$stmt = $pdo->prepare("SELECT nombre, apellido, rol FROM usuarios WHERE usuario = ? OR email = ?");
 $stmt->execute([$_SESSION['usuario'], $_SESSION['usuario']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -18,72 +17,47 @@ if (!$user) {
     die("Error: No se encontraron datos del usuario.");
 }
 ?>
-
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-    }
-
-    .container {
-        text-align: center;
-        background: #fff;
-        padding: 32px 32px 28px 32px;
-        border-radius: 12px;
-        box-shadow: 0 4px 16px rgba(106, 13, 173, 0.10);
-        width: 360px;
-        min-width: 320px;
-    }
-
-    .container h1 {
-        margin-bottom: 32px;
-        font-size: 1.5rem;
-        color: #6a0dad;
-    }
-
-    .container a {
-        text-decoration: none;
-        display: block;
-        margin-bottom: 18px;
-    }
-
-    button {
-        width: 90%;
-        max-width: 260px;
-        padding: 14px 0;
-        background-color: #6a0dad;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1.08rem;
-        font-weight: 600;
-        margin: 0 auto;
-        transition: background 0.2s, transform 0.1s;
-        box-shadow: 0 2px 8px rgba(106, 13, 173, 0.08);
-        display: block;
-    }
-
-    button:hover {
-        background-color: #4b0082;
-        transform: translateY(-2px) scale(1.03);
-    }
-</style>
-
-<div class="container">
-    <h1>Bienvenido, <?php echo htmlspecialchars($user['nombre'] . ' ' . $user['apellido']); ?></h1>
-    <a href="logout.php">
-        <button>Cerrar sesión</button>
-    </a>
-    <a href="perfil.php">
-        <button>Perfil</button>
-    </a>
-    <a href="registro_inventario.php">
-        <button>Registrar Inventario</button>
-    </a>
-</div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl px-10 py-12 flex flex-col items-center" style="margin-top:40px; margin-bottom:40px;">
+            <h1 class="text-3xl font-bold text-purple-700 mb-10 text-center tracking-tight">
+                Bienvenido, <?php echo htmlspecialchars($user['nombre'] . ' ' . $user['apellido']); ?>
+            </h1>
+            <div class="w-full flex flex-col gap-5">
+                <a href="perfil.php" class="w-full">
+                    <button class="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg mb-2">
+                        Perfil
+                    </button>
+                </a>
+                <?php if (strtolower($user['rol']) !== 'super_usuario'): ?>
+                <a href="registro_inventario.php" class="w-full">
+                    <button class="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg mb-2">
+                        Registrar Inventario
+                    </button>
+                </a>
+                <?php endif; ?>
+                <?php if (strtolower($user['rol']) !== 'digitalizador'): ?>
+                <a href="registro_inventario.php" class="w-full">
+                    <button class="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg mb-2">
+                        Inventario
+                    </button>
+                </a>
+                <?php endif; ?>
+                <a href="logout.php" class="w-full">
+                    <button class="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg mt-2">
+                        Cerrar sesión
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
