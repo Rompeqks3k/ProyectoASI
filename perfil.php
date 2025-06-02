@@ -65,12 +65,14 @@ if (!$usuario) {
                     <span><?php echo htmlspecialchars($usuario['rol']); ?></span>
                 </div>
             </div>
-            <!-- Botón para cambiar la contraseña -->
+            <!-- Botón para cambiar la contraseña (oculto/eliminado) -->
+            <!--
             <a href="recuperarcontraseña.php" class="mt-8 w-full">
                 <button class="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg">
                     Cambiar Contraseña
                 </button>
             </a>
+            -->
         </div>
     </div>
 </body>
